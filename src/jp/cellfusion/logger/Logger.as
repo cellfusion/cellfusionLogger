@@ -3,31 +3,42 @@ package jp.cellfusion.logger
 
 	/**
 	 * @author cellfusion
-	 * initialize 時に出力するレベルを設定できます
-	 * デフォルトは trace まで出力
+	 * 
+	 * Logger ライブラリ
+	 * initialize 時に出力するレベルを設定します。
+	 * デフォルトは info まで出力。
+	 * 
+	 * trace と SOS Max へ出力します。
+	 * flex では trace が消せないので Logger.initialize(Logger.LEVEL_NONE); を指定して出力しないように出来ます。
+	 * 
+	 * SOS Max
+	 * http://www.sos.powerflasher.com/developer-tools/sosmax/home/
 	 */
 	public class Logger 
 	{
-		public static const NONE:uint = 0;
-		public static const TRACE:uint = 1;
-		public static const DEBUG:uint = 2;
-		public static const INFO:uint = 3;
-		public static const WARNING:uint = 4;
-		public static const ERROR:uint = 5;
-		public static const FATAL:uint = 6;
+		public static const LEVEL_NONE:uint = 0;
+		public static const LEVEL_TRACE:uint = 1;
+		public static const LEVEL_DEBUG:uint = 2;
+		public static const LEVEL_INFO:uint = 3;
+		public static const LEVEL_WARNING:uint = 4;
+		public static const LEVEL_ERROR:uint = 5;
+		public static const LEVEL_FATAL:uint = 6;
 		private static var _level:uint;
 		private static var _ready:Boolean = false;
 		private static var _keys:Array;
 		private static var _loggers:Array;
 
 		/**
-		 * initialize 時に Logger も作成する
+		 * @param level 出力レベル
+		 * 
+		 * 出力するレベルを選択
+		 * 一度実行すると後からは変更できないのできないので、読み込み元では LEVEL_NONE を指定して常に出力が出ないようにすることも可能。
 		 */
-		public static function initialize(level:uint = INFO):void 
+		public static function initialize(level:uint = LEVEL_INFO):void 
 		{
 			if (_ready) return;
 			
-			if (level == Logger.NONE) {
+			if (level == Logger.LEVEL_NONE) {
 				_ready = true;
 				return;
 			}
@@ -42,37 +53,58 @@ package jp.cellfusion.logger
 			
 			_ready = true;
 		}
-
+		
+		/**
+		 * 
+		 */
 		public static function trace(message:String):void 
 		{
-			log(message, TRACE);
+			log(message, LEVEL_TRACE);
 		}
-
+		
+		/**
+		 * 
+		 */
 		public static function debug(message:String):void 
 		{
-			log(message, DEBUG);
+			log(message, LEVEL_DEBUG);
 		}
-
+		
+		/**
+		 * 
+		 */
 		public static function info(message:String):void 
 		{
-			log(message, INFO);
+			log(message, LEVEL_INFO);
 		}
-
+		
+		/**
+		 * 
+		 */
 		public static function warning(message:String):void 
 		{
-			log(message, WARNING);
+			log(message, LEVEL_WARNING);
 		}
-
+		
+		/**
+		 * 
+		 */
 		public static function error(message:String):void 
 		{
-			log(message, ERROR);
+			log(message, LEVEL_ERROR);
 		}
-
+		
+		/**
+		 * 
+		 */
 		public static function fatal(message:String):void 
 		{
-			log(message, FATAL);
+			log(message, LEVEL_FATAL);
 		}
-
+		
+		/**
+		 * 
+		 */
 		private static function log(message:String, level:uint):void 
 		{
 			if(!_ready) {

@@ -25,27 +25,32 @@ package jp.cellfusion.logger
 		{
 			_socket = new XMLSocket();
 			_socket.addEventListener(Event.CONNECT, connectHandler);
-			_socket.addEventListener(IOErrorEvent.IO_ERROR, errorHandler);
-			_socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, errorHandler);
+			_socket.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+			_socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
 			
 			try {
 				_socket.connect('localhost', 4444);
 			} catch (e:SecurityError) {
-				Logger.error('SecurityError in SOSAppender:' + e);
+				trace('SecurityError in SOSAppender:' + e);
 				return;
 			}
 			
 			_ready = true;
 		}
 
-		private function errorHandler(event:Event):void 
+		private function securityErrorHandler(event:SecurityErrorEvent):void 
 		{
-			Logger.error('Error in SOSAppender:' + event);
+			trace('Error in SOSAppender:' + event);
+		}
+
+		private function ioErrorHandler(event:IOErrorEvent):void 
+		{
+			trace('Error in SOSAppender:' + event);
 		}
 
 		private function connectHandler(event:Event):void 
 		{
-			Logger.info('!Connected is SOS!');
+			trace('!Connected is SOS!');
 		}
 
 		public function output(message:String, key:String):void 
