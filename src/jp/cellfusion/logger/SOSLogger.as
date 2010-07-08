@@ -50,7 +50,7 @@ package jp.cellfusion.logger
 
 		private function connectHandler(event:Event):void 
 		{
-			trace('!Connected is SOS!');
+			//trace('!Connected is SOS!');
 		}
 
 		public function output(message:String, key:String):void 

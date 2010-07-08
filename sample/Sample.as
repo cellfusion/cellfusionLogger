@@ -10,7 +10,7 @@ package
 	{
 		public function Sample() 
 		{
-			Logger.initialize(Logger.LEVEL_FATAL);
+			Logger.initialize();
 			
 			Logger.trace("trace");
 			Logger.debug("debug");
