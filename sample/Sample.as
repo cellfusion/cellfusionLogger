@@ -11,13 +11,18 @@ package
 		public function Sample() 
 		{
 			Logger.initialize();
+
+			var hoge:String = "str";
+			var fuga:Function = function():Number {
+				return Math.random();
+			};
 			
-			Logger.trace("trace");
-			Logger.debug("debug");
-			Logger.info("info");
-			Logger.warning("warning");
-			Logger.error("error");
-			Logger.fatal("fatal");
+			Logger.trace("trace", 1, hoge, fuga);
+			Logger.debug("debug", 1, hoge, fuga);
+			Logger.info("info", 1, hoge, fuga);
+			Logger.warning("warning", 1, hoge, fuga);
+			Logger.error("error", 1, hoge, fuga);
+			Logger.fatal("fatal", 1, hoge, fuga);
 		}
 	}
 }

@@ -1,14 +1,18 @@
-package jp.cellfusion.logger 
+package jp.cellfusion.logger
 {
-
 	/**
 	 * @author cellfusion
 	 */
-	public class TraceLogger implements ILogger 
+	public class TraceLogger implements ILogger
 	{
-		public function output(message:String, key:String):void 
+		public function output(key:String, message:Array):void
 		{
-			trace("[" + key + "] " + message);
+			var m:String = "";
+			for (var i:uint = 0; i < message.length; i++) {
+				if (i > 0) m += ", ";
+				m += message[i];
+			}
+			trace("[" + key + "] " + m);
 		}
 	}
 }
