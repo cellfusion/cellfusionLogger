@@ -23,20 +23,22 @@ package jp.cellfusion.logger
 	 * 
 	 * 
 	 * flex では trace が消せないので下記のように指定して出力しないように出来ます。
-	 * Logger.initialize(null, Logger.NONE);
+	 * 新しい flex だと option で消せるようになったぽいですね
+	 * Logger.initialize(Logger.LEVEL_NONE, Logger.LOG_NONE);
 	 * 
 	 * SOS Max
 	 * http://www.sos.powerflasher.com/developer-tools/sosmax/home/
 	 */
 	public class Logger 
 	{
+		public static const LEVEL_NONE:uint = 0;
 		public static const LEVEL_TRACE:uint = 1;
 		public static const LEVEL_DEBUG:uint = 2;
 		public static const LEVEL_INFO:uint = 4;
 		public static const LEVEL_WARNING:uint = 8;
 		public static const LEVEL_ERROR:uint = 16;
 		public static const LEVEL_FATAL:uint = 32;
-		public static const NONE:uint = 0;
+		public static const LOG_NONE:uint = 0;
 		public static const LOG_SOSMAX:uint = 1;
 		public static const LOG_TRACE:uint = 2;
 		private static var _level:uint;
@@ -50,7 +52,7 @@ package jp.cellfusion.logger
 		 * 出力するレベルを選択
 		 * 一度実行すると後からは変更できないのできないので、読み込み元では LEVEL_NONE を指定して常に出力が出ないようにすることも可能。
 		 */
-		public static function initialize(level:uint = 63, logger:uint = 3):void 
+		public static function initialize(level:uint = uint.MAX_VALUE, logger:uint = uint.MAX_VALUE):void 
 		{
 			if (_ready) return;
 			

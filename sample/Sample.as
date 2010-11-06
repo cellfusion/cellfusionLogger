@@ -1,14 +1,15 @@
-package  
+package
 {
 	import jp.cellfusion.logger.Logger;
+
 	import flash.display.Sprite;
 
 	/**
 	 * @author Mk-10:cellfusion (www.cellfusion.jp)
 	 */
-	public class Sample extends Sprite 
+	public class Sample extends Sprite
 	{
-		public function Sample() 
+		public function Sample()
 		{
 			Logger.initialize();
 
@@ -16,6 +17,12 @@ package
 			var fuga:Function = function():Number {
 				return Math.random();
 			};
+			
+			/*FDT_IGNORE*/
+			CONFIG::Debug {
+				Logger.trace("debug");
+			}
+			/*FDT_IGNORE*/
 			
 			Logger.trace("trace", 1, hoge, fuga);
 			Logger.debug("debug", 1, hoge, fuga);
