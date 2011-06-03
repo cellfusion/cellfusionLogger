@@ -11,12 +11,15 @@ package
 	{
 		public function Sample()
 		{
-			Logger.initialize();
+			Logger.initialize(Logger.LEVEL_ALL, Logger.LOG_NONE);
 
 			var hoge:String = "str";
 			var fuga:Function = function():Number {
 				return Math.random();
 			};
+			
+			
+			Logger.addLogFunction(trace);
 			
 			/*FDT_IGNORE*/
 			CONFIG::Debug {
@@ -24,12 +27,14 @@ package
 			}
 			/*FDT_IGNORE*/
 			
-			Logger.trace("trace", 1, hoge, fuga);
-			Logger.debug("debug", 1, hoge, fuga);
-			Logger.info("info", 1, hoge, fuga);
-			Logger.warning("warning", 1, hoge, fuga);
-			Logger.error("error", 1, hoge, fuga);
-			Logger.fatal("fatal", 1, hoge, fuga);
+			Logger.trace("trace", 1, hoge);
+			Logger.debug("debug", 1, hoge);
+			Logger.info("info", 1, hoge);
+			Logger.warning("warning", 1, hoge);
+			Logger.error("error", 1, hoge);
+			Logger.fatal("fatal", 1, hoge);
+			
+			trace("complete");
 		}
 	}
 }
