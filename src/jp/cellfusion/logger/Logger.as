@@ -38,12 +38,17 @@ package jp.cellfusion.logger
 		public static const LEVEL_WARNING:uint = 8;
 		public static const LEVEL_ERROR:uint = 16;
 		public static const LEVEL_FATAL:uint = 32;
+		public static const LEVEL_ALL:uint = parseInt("111111");
 		public static const LOG_NONE:uint = 0;
 		public static const LOG_SOSMAX:uint = 1;
 		public static const LOG_TRACE:uint = 2;
+		public static const LOG_FUNCTION:uint = 4;
+		public static const LOG_ALL:uint = parseInt("111111");
 		private static var _level:uint;
 		private static var _ready:Boolean = false;
 		private static var _loggers:Array;
+		private static var _logFunctions:Array;
+		private static var _logFunctionEnable:Boolean;
 
 		/**
 		 * @param level 出力レベル
@@ -62,7 +67,15 @@ package jp.cellfusion.logger
 			if ((logger & LOG_SOSMAX) == LOG_SOSMAX) _loggers.push(new SOSLogger());
 			if ((logger & LOG_TRACE) == LOG_TRACE) _loggers.push(new TraceLogger());
 			
+			_logFunctionEnable = (logger & LOG_FUNCTION) == LOG_FUNCTION;
+			_logFunctions = [];
+			
 			_ready = true;
+		}
+
+		public static function addLogFunction(func:Function):void
+		{
+			_logFunctions.push(func);
 		}
 
 		/**
@@ -125,6 +138,11 @@ package jp.cellfusion.logger
 			
 			for each (var l:ILogger in _loggers) {
 				l.output(key, message);
+			}
+			
+			if (!_logFunctionEnable) return;
+			for each (var i : Function in _logFunctions) {
+				i.apply(null, message);
 			}
 		}
 
