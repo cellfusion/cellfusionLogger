@@ -31,7 +31,7 @@ package jp.cellfusion.logger
 			try {
 				_socket.connect('localhost', 4444);
 			} catch (e:SecurityError) {
-				trace('SecurityError in SOSAppender:' + e);
+				//trace('SecurityError in SOSAppender:' + e);
 				return;
 			}
 
@@ -40,12 +40,12 @@ package jp.cellfusion.logger
 
 		private function securityErrorHandler(event:SecurityErrorEvent):void
 		{
-			trace('Error in SOSAppender:' + event);
+			// trace('Error in SOSAppender:' + event);
 		}
 
 		private function ioErrorHandler(event:IOErrorEvent):void
 		{
-			trace('Error in SOSAppender:' + event);
+			// trace('Error in SOSAppender:' + event);
 		}
 
 		private function connectHandler(event:Event):void
@@ -73,7 +73,7 @@ package jp.cellfusion.logger
 			try {
 				_socket.send("!SOS<showMessage key='" + key + "'>" + m + "</showMessage>\n");
 			} catch (e:Error) {
-				trace('SOSLogger send Error.');
+				// trace('SOSLogger send Error.');
 			}
 		}
 	}
