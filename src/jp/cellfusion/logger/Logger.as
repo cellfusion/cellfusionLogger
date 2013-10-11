@@ -1,6 +1,5 @@
 package jp.cellfusion.logger 
 {
-
 	/**
 	 * @author cellfusion
 	 * 
@@ -8,23 +7,17 @@ package jp.cellfusion.logger
 	 * initialize 時に出力するレベルと出力先を設定します。
 	 *
 	 *
-	 * レベル : デフォルトは全て出力。
+	 * レベル : デフォルトは何も出力しない
 	 * 
 	 * レベルは下記のように必要な物だけ選択することも出来ます。
 	 * Logger.initialize(Logger.LEVEL_TRACE | Logger.LEVEL_INFO | Logger.LEVEL_FATAL);
 	 * 
 	 * 下記のようにも設定できます。（Error 以外を出力）
 	 * Logger.initialize(parseInt("101111", 2));
-	 *  
-	 * 出力先 : デフォルトでは trace と SOS Max へ出力します。
-	 * 
-	 * レベルと同じように必要な出力先だけに変更できます
-	 * Logger.initialize(null, Logger.TRACE_LOG | Logger.SOSMAX_LOG);
-	 * 
 	 * 
 	 * flex では trace が消せないので下記のように指定して出力しないように出来ます。
 	 * 新しい flex だと option で消せるようになったぽいですね
-	 * Logger.initialize(Logger.LEVEL_NONE, Logger.LOG_NONE);
+	 * Logger.initialize(Logger.LEVEL_NONE);
 	 * 
 	 * SOS Max
 	 * http://www.sos.powerflasher.com/developer-tools/sosmax/home/
@@ -39,16 +32,9 @@ package jp.cellfusion.logger
 		public static const LEVEL_ERROR:uint = 16;
 		public static const LEVEL_FATAL:uint = 32;
 		public static const LEVEL_ALL:uint = parseInt("111111");
-		public static const LOG_NONE:uint = 0;
-		public static const LOG_SOSMAX:uint = 1;
-		public static const LOG_TRACE:uint = 2;
-		public static const LOG_FUNCTION:uint = 4;
-		public static const LOG_ALL:uint = parseInt("111111");
 		private static var _level:uint;
 		private static var _ready:Boolean = false;
-		private static var _loggers:Array;
-		private static var _logFunctions:Array;
-		private static var _logFunctionEnable:Boolean;
+		private static var _loggers:Vector.<ILogger>;
 
 		/**
 		 * @param level 出力レベル
@@ -57,25 +43,18 @@ package jp.cellfusion.logger
 		 * 出力するレベルを選択
 		 * 一度実行すると後からは変更できないのできないので、読み込み元では LEVEL_NONE を指定して常に出力が出ないようにすることも可能。
 		 */
-		public static function initialize(level:uint = uint.MAX_VALUE, logger:uint = uint.MAX_VALUE):void 
+		public static function initialize(level:uint = 0, logger:Vector.<ILogger> = null):void
 		{
 			if (_ready) return;
 			
 			_level = level;
-			
-			_loggers = [];
-			if ((logger & LOG_SOSMAX) == LOG_SOSMAX) _loggers.push(new SOSLogger());
-			if ((logger & LOG_TRACE) == LOG_TRACE) _loggers.push(new TraceLogger());
-			
-			_logFunctionEnable = (logger & LOG_FUNCTION) == LOG_FUNCTION;
-			_logFunctions = [];
+
+			if (logger == null) {
+				_loggers = new Vector.<ILogger>();
+				_loggers.push(new TraceLogger());
+			}
 			
 			_ready = true;
-		}
-
-		public static function addLogFunction(func:Function):void
-		{
-			_logFunctions.push(func);
 		}
 
 		/**
@@ -138,11 +117,6 @@ package jp.cellfusion.logger
 			
 			for each (var l:ILogger in _loggers) {
 				l.output(key, message);
-			}
-			
-			if (!_logFunctionEnable) return;
-			for each (var i : Function in _logFunctions) {
-				i.apply(null, message);
 			}
 		}
 
