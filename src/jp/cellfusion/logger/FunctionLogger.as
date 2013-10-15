@@ -11,9 +11,9 @@ package jp.cellfusion.logger
 			_logFunction = logFunction;
 		}
 
-		public function output(key:String, message:Array):void
+		public function output(key:String, message:String):void
 		{
-			_logFunction.apply(null, [message, key]);
+			_logFunction.apply(null, ["[" + key + "] " + message]);
 		}
 	}
 }

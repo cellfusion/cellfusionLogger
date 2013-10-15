@@ -60,7 +60,7 @@ package jp.cellfusion.logger
 		/**
 		 * trace レベルのログを出力
 		 */
-		public static function trace(...message:Array):void 
+		public static function trace(...message:Array):void
 		{
 			if ((_level & LEVEL_TRACE) == LEVEL_TRACE) log("trace", message);
 		}
@@ -114,9 +114,15 @@ package jp.cellfusion.logger
 				initializeError();
 				return;
 			}
+
+			var m:String = "";
+			for (var i:uint = 0; i < message.length; i++) {
+				if (i > 0) m += ", ";
+				m += message[i];
+			}
 			
 			for each (var l:ILogger in _loggers) {
-				l.output(key, message);
+				l.output(key, m);
 			}
 		}
 

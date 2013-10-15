@@ -53,7 +53,7 @@ package jp.cellfusion.logger
 			// trace('!Connected is SOS!');
 		}
 
-		public function output(key:String, message:Array):void
+		public function output(key:String, message:String):void
 		{
 			if (!_ready) {
 				return;

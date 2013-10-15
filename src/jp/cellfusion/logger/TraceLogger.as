@@ -5,14 +5,9 @@ package jp.cellfusion.logger
 	 */
 	public class TraceLogger implements ILogger
 	{
-		public function output(key:String, message:Array):void
+		public function output(key:String, message:String):void
 		{
-			var m:String = "";
-			for (var i:uint = 0; i < message.length; i++) {
-				if (i > 0) m += ", ";
-				m += message[i];
-			}
-			trace("[" + key + "] " + m);
+			trace("[" + key + "] " + message);
 		}
 	}
 }
