@@ -1,4 +1,4 @@
-package
+package jp.cellfusion.logger.sample
 {
 	import jp.cellfusion.logger.Logger;
 
