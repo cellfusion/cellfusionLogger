@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="robots" content="index, follow">
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title>sample</title>
+    <script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="jquery.swfobject.1-1-1.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#content').flash({
+                id: "external_sample",
+                swf: 'sample.swf',
+                width: '550',
+                height: '400',
+                hasVersion: '10.2.00',
+                allowFullScreen: false,
+                allowscriptaccess: 'always',
+                bgcolor: '#FFFFFF',
+                wmode: 'transparent',
+                base: '.',
+                flashvars:{}
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="content"></div>
+</body>
+</html>
