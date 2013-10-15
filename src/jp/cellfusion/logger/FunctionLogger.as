@@ -13,7 +13,7 @@ package jp.cellfusion.logger
 
 		public function output(key:String, message:String):void
 		{
-			_logFunction.apply(null, ["[" + key + "] " + message]);
+			_logFunction.call(null, "[" + key + "] " + message);
 		}
 	}
 }
