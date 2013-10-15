@@ -1,5 +1,8 @@
 package jp.cellfusion.logger 
 {
+	import flash.system.Capabilities;
+	import flash.system.System;
+
 	/**
 	 * @author cellfusion
 	 * 
@@ -103,6 +106,17 @@ package jp.cellfusion.logger
 		public static function fatal(...message:Array):void 
 		{
 			if ((_level & LEVEL_FATAL) == LEVEL_FATAL) log("fatal", message);
+		}
+
+		/**
+		 * スタックトレース
+		 */
+		public static function stackTrace():void
+		{
+			if (!Capabilities.isDebugger) return;
+
+			var st:String = new Error().getStackTrace();
+			log("stackTrace", [st]);
 		}
 
 		/**

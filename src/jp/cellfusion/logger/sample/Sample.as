@@ -24,6 +24,8 @@ package jp.cellfusion.logger.sample
 			Logger.warning("warning", 1, hoge);
 			Logger.error("error", 1, hoge);
 			Logger.fatal("fatal", 1, hoge);
+
+			Logger.stackTrace();
 			
 			trace("complete");
 		}
