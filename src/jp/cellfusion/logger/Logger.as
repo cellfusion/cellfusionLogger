@@ -52,6 +52,8 @@ package jp.cellfusion.logger
 			if (logger == null) {
 				_loggers = new Vector.<ILogger>();
 				_loggers.push(new TraceLogger());
+			} else {
+				_loggers = logger;
 			}
 			
 			_ready = true;
