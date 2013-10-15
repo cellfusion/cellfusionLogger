@@ -44,12 +44,9 @@ package jp.cellfusion.logger
 		 * @param logger 出力先
 		 * 
 		 * 出力するレベルを選択
-		 * 一度実行すると後からは変更できないのできないので、読み込み元では LEVEL_NONE を指定して常に出力が出ないようにすることも可能。
 		 */
 		public static function initialize(level:uint = 0, logger:Vector.<ILogger> = null):void
 		{
-			if (_ready) return;
-			
 			_level = level;
 
 			if (logger == null) {
