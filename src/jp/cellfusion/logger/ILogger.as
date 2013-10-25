@@ -6,6 +6,6 @@ package jp.cellfusion.logger
 	 */
 	public interface ILogger 
 	{
-		function output(key:String, message:String):void;
+		function output(key:uint, message:String):void;
 	}
 }

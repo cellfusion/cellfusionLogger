@@ -28,13 +28,12 @@ package jp.cellfusion.logger
 	public class Logger 
 	{
 		public static const LEVEL_NONE:uint = 0;
-		public static const LEVEL_TRACE:uint = 1;
-		public static const LEVEL_DEBUG:uint = 2;
-		public static const LEVEL_INFO:uint = 4;
-		public static const LEVEL_WARNING:uint = 8;
-		public static const LEVEL_ERROR:uint = 16;
-		public static const LEVEL_FATAL:uint = 32;
-		public static const LEVEL_ALL:uint = parseInt("111111");
+		public static const LEVEL_DEBUG:uint = 1;
+		public static const LEVEL_INFO:uint = 2;
+		public static const LEVEL_WARNING:uint = 4;
+		public static const LEVEL_ERROR:uint = 8;
+		public static const LEVEL_FATAL:uint = 16;
+		public static const LEVEL_ALL:uint = LEVEL_DEBUG | LEVEL_INFO | LEVEL_WARNING | LEVEL_ERROR | LEVEL_FATAL;
 		private static var _level:uint;
 		private static var _ready:Boolean = false;
 		private static var _loggers:Vector.<ILogger>;
@@ -60,19 +59,11 @@ package jp.cellfusion.logger
 		}
 
 		/**
-		 * trace レベルのログを出力
-		 */
-		public static function trace(...message:Array):void
-		{
-			if ((_level & LEVEL_TRACE) == LEVEL_TRACE) log("trace", message);
-		}
-
-		/**
 		 * debug レベルのログを出力
 		 */
 		public static function debug(...message:Array):void 
 		{
-			if ((_level & LEVEL_DEBUG) == LEVEL_DEBUG) log("debug", message);
+			if ((_level & LEVEL_DEBUG) == LEVEL_DEBUG) log(LEVEL_DEBUG, message);
 		}
 
 		/**
@@ -80,7 +71,7 @@ package jp.cellfusion.logger
 		 */
 		public static function info(...message:Array):void 
 		{
-			if ((_level & LEVEL_INFO) == LEVEL_INFO) log("info", message);
+			if ((_level & LEVEL_INFO) == LEVEL_INFO) log(LEVEL_INFO, message);
 		}
 
 		/**
@@ -88,7 +79,7 @@ package jp.cellfusion.logger
 		 */
 		public static function warning(...message:Array):void 
 		{
-			if ((_level & LEVEL_WARNING) == LEVEL_WARNING) log("warning", message);
+			if ((_level & LEVEL_WARNING) == LEVEL_WARNING) log(LEVEL_WARNING, message);
 		}
 
 		/**
@@ -96,7 +87,7 @@ package jp.cellfusion.logger
 		 */
 		public static function error(...message:Array):void 
 		{
-			if ((_level & LEVEL_ERROR) == LEVEL_ERROR) log("error", message);
+			if ((_level & LEVEL_ERROR) == LEVEL_ERROR) log(LEVEL_ERROR, message);
 		}
 
 		/**
@@ -104,7 +95,7 @@ package jp.cellfusion.logger
 		 */
 		public static function fatal(...message:Array):void 
 		{
-			if ((_level & LEVEL_FATAL) == LEVEL_FATAL) log("fatal", message);
+			if ((_level & LEVEL_FATAL) == LEVEL_FATAL) log(LEVEL_FATAL, message);
 		}
 
 		/**
@@ -115,13 +106,13 @@ package jp.cellfusion.logger
 			if (!Capabilities.isDebugger) return;
 
 			var st:String = new Error().getStackTrace();
-			log("stackTrace", [st]);
+			log(LEVEL_INFO, [st]);
 		}
 
 		/**
 		 * 
 		 */
-		private static function log(key:String, message:Array):void 
+		private static function log(key:uint, message:Array):void
 		{
 			if(!_ready) {
 				initializeError();

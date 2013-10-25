@@ -34,8 +34,6 @@ package jp.cellfusion.logger
 				//trace('SecurityError in SOSAppender:' + e);
 				return;
 			}
-
-			_ready = true;
 		}
 
 		private function securityErrorHandler(event:SecurityErrorEvent):void
@@ -51,9 +49,11 @@ package jp.cellfusion.logger
 		private function connectHandler(event:Event):void
 		{
 			// trace('!Connected is SOS!');
+
+			_ready = true;
 		}
 
-		public function output(key:String, message:String):void
+		public function output(key:uint, message:String):void
 		{
 			if (!_ready) {
 				return;
@@ -70,11 +70,27 @@ package jp.cellfusion.logger
 			m = m.replace(/\>/g, "&gt;");
 			m = m.replace(/\&/g, "&amp;");
 
-			try {
-				_socket.send("!SOS<showMessage key='" + key + "'>" + m + "</showMessage>\n");
-			} catch (e:Error) {
-				// trace('SOSLogger send Error.');
+			switch (key) {
+				case Logger.LEVEL_DEBUG:
+					_socket.send("!SOS<showMessage key='debug'>" + m + "</showMessage>\n");
+					break;
+				case Logger.LEVEL_INFO:
+					_socket.send("!SOS<showMessage key='info'>" + m + "</showMessage>\n");
+					break;
+				case Logger.LEVEL_WARNING:
+					_socket.send("!SOS<showMessage key='warning'>" + m + "</showMessage>\n");
+					break;
+				case Logger.LEVEL_ERROR:
+					_socket.send("!SOS<showMessage key='error'>" + m + "</showMessage>\n");
+					break;
+				case Logger.LEVEL_FATAL:
+					_socket.send("!SOS<showMessage key='fatal'>" + m + "</showMessage>\n");
+					break;
+				default:
+					_socket.send(m);
 			}
+
+
 		}
 	}
 }

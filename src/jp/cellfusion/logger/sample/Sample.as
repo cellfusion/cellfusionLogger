@@ -19,17 +19,16 @@ package jp.cellfusion.logger.sample
 
 			CONFIG::debug {
 				Logger.initialize(Logger.LEVEL_ALL, new <ILogger>[new TraceLogger(), new ConsoleLogger()]);
-				Logger.trace("debug");
+				trace("debug mode");
 			}
 
-			Logger.trace("trace", 1, hoge);
 			Logger.debug("debug", 1, hoge);
 			Logger.info("info", 1, hoge);
 			Logger.warning("warning", 1, hoge);
 			Logger.error("error", 1, hoge);
 			Logger.fatal("fatal", 1, hoge);
 
-			Logger.stackTrace();
+			//Logger.stackTrace();
 			
 			trace("complete");
 		}
